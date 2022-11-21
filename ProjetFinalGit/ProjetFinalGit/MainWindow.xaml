@@ -1,0 +1,19 @@
+﻿<Window
+    x:Class="ProjetFinalGit.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ProjetFinalGit"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+
+
+    <NavigationView PaneDisplayMode="Left" PaneTitle="Uber sur un budget" IsBackButtonVisible="Collapsed" Background="#181818" Foreground="#f1f3f8">
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="Se Connecter" Icon="Permissions"/>
+        </NavigationView.MenuItems>
+        <Frame x:Name="mainFrame"/>
+    </NavigationView>
+    
+</Window>

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ProjetFinalGit (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "ProjetFinalGit (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
