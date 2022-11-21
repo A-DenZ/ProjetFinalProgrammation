@@ -32,23 +32,25 @@ namespace ProjetFinalGit
 
         private void LogInBut_Click(object sender, RoutedEventArgs e)
         {
-            bool valide = true; 
-
+            bool valide = true;
+            reset();
 
             // changer le logEmail.Text
 
-            if(LogEmail.Text == "")
+            if(LogEmail.Text.Length == 0)
             {
               valide = false;
-              logErreur.Text = "Un champ est invalide";
                 
             }
             if(LogPass.Password.ToString() == "")
             {
                 valide = false;
-                logErreur.Text = "un champ est invalide";
             }
-
+            if(valide != true)
+            {
+                logErreur.Text = "Un champ est invalide";
+            }
+    
             if(valide == true)
             {
                 
@@ -56,7 +58,11 @@ namespace ProjetFinalGit
                 if(userLogged != true)
                 {
                     valide = false;
-                    LogEmail.Text = "un champ est invalide";
+                    logErreur.Text = "l'email ou le mot de passe est invalide";
+                }
+                else
+                {
+                    //logErreur.Text = "Un usager à été login tamaman";
                 }
             }
         }
@@ -74,8 +80,73 @@ namespace ProjetFinalGit
 
         private void CreateAccount_Click(object sender, RoutedEventArgs e)
         {
+            bool accValide = true;
+            reset();
+
+            if(accPrenom.Text.Length == 0)
+            {
+                accValide = false;
+            }
+            if(accNom.Text.Length == 0)
+            {
+                accValide = false;
+            }
+            if (accPhone.Text.Length == 0)
+            {
+                accValide = false;                
+            }
+            if (accAdresse.Text.Length == 0)
+            {
+                accValide = false;
+            }
+            if (accAdresse.Text.Length == 0)
+            {
+                accValide = false; 
+            }
+            if (accEmail.Text.Length == 0)
+            {
+                accValide = false;
+            }
+            if(accPassword.Password.ToString() == "")
+            {
+                accValide = false;   
+            }
+
+            if(accValide != true)
+            {
+                accErreur.Text = "un champ est invalide";
+            }
+            else
+            {
+                setUser();
+                this.Frame.Navigate(typeof(PageConnection));
+            }
 
         }
+
+        private void setUser()
+        {
+            User u = new User()
+            {
+                Prenom = accPrenom.Text,
+                Nom = accNom.Text,
+                Phone = accPhone.Text,
+                Adresse = accAdresse.Text,
+                Email = accEmail.Text,
+                Password = accPassword.Password.ToString(),
+
+            };
+            GestionBD.getInstance().addUser(u);
+        }
+
+
+        private void reset()
+        {
+            accErreur.Text = "";
+            logErreur.Text = "";
+        }
+
+
     }
 
 }
