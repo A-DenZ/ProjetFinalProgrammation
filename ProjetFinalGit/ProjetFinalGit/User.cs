@@ -8,6 +8,18 @@ namespace ProjetFinalGit
 {
     internal class User
     {
+        string prenom;
+        string nom;
+        string phone;
+        string adresse;
+        string email;
+        string password;
 
+        public string Prenom { get => prenom; set => prenom = value; }
+        public string Nom { get => nom; set => nom = value; }
+        public string Phone { get => phone; set => phone = value; }
+        public string Adresse { get => adresse; set => adresse = value; }
+        public string Email { get => email; set => email = value; }
+        public string Password { get => password; set => password = value; }
     }
 }
