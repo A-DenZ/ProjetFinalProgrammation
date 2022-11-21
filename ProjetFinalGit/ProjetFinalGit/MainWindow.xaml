@@ -12,7 +12,9 @@
     <NavigationView PaneDisplayMode="Left" PaneTitle="Uber sur un budget" IsBackButtonVisible="Collapsed" Background="#181818" Foreground="#f1f3f8">
         <NavigationView.MenuItems>
             <NavigationViewItem Content="Se Connecter" Icon="Permissions"/>
+            <NavigationViewItem Content="Trajets" Icon="Map" x:Name="Trajets" Visibility="Visible"/>
         </NavigationView.MenuItems>
+        
         <Frame x:Name="mainFrame"/>
     </NavigationView>
     

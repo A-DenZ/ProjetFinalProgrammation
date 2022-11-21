@@ -24,7 +24,7 @@ namespace ProjetFinalGit
     /// </summary>
     public sealed partial class PageConnection : Page
     {
-        bool UserLogged = false; 
+        bool userLogged = false;      
         public PageConnection()
         {
             this.InitializeComponent();
@@ -39,29 +39,43 @@ namespace ProjetFinalGit
 
             if(LogEmail.Text == "")
             {
-              valide = false; 
-              LogEmail.Text = "Un champ est invalide";
+              valide = false;
+              logErreur.Text = "Un champ est invalide";
                 
             }
             if(LogPass.Password.ToString() == "")
             {
                 valide = false;
-                LogEmail.Text = "un champ est invalide";
+                logErreur.Text = "un champ est invalide";
             }
 
-            if(valide = true)
+            if(valide == true)
             {
                 
-               UserLogged = GestionBD.getInstance().getUser(LogEmail.Text, LogPass.Password.ToString());
-                if(UserLogged != true)
+               userLogged = GestionBD.getInstance().getUser(LogEmail.Text, LogPass.Password.ToString());
+                if(userLogged != true)
                 {
-                    valide = false; 
+                    valide = false;
+                    LogEmail.Text = "un champ est invalide";
                 }
             }
         }
         private void NewUser_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            logPanel.Visibility = Visibility.Collapsed;
+            accPanel.Visibility = Visibility.Visible; 
+        }
+
+        private void AlreadyUser_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            logPanel.Visibility = Visibility.Visible;
+            accPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void CreateAccount_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }
+
 }

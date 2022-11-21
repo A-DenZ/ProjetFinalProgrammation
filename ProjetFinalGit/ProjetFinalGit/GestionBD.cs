@@ -12,6 +12,7 @@ namespace ProjetFinalGit
     {
         MySqlConnection con;
         static GestionBD gestionBD = null;
+        bool userLogged = false;
 
         public GestionBD()
         {
@@ -31,6 +32,8 @@ namespace ProjetFinalGit
 
         ObservableCollection<User> listeUser = new ObservableCollection<User>();
 
+        public bool UserLogged { get => userLogged; }
+
         public bool getUser(string e, string p)
         {
 
@@ -40,14 +43,21 @@ namespace ProjetFinalGit
             con.Open();
             MySqlDataReader r = commande.ExecuteReader();
             if(r.Read() == true)
-            { 
-                return true;
+            {
+                
+                userLogged = true;
+                return true;     
             }
             else
             {
                 return false;
             }
             
+        }
+
+        public bool getLoginStat()
+        {
+            return userLogged;
         }
 
     }
