@@ -27,7 +27,21 @@ namespace ProjetFinalGit
         {
             this.InitializeComponent();
             this.mainFrame.Navigate(typeof(PageConnection));
+
         }
+
+        public void updateSession()
+        {
+            if (GestionBD.getInstance().getLoginStat() == true)
+            {
+                Trajets.Visibility = Visibility.Visible;
+                
+            }
+        }
+
+
+
+
 
 
 
