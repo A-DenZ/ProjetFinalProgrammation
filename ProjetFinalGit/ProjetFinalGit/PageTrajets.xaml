@@ -16,9 +16,9 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" >
-                        <TextBlock Text="{ x:Bind placeD }"/>
+                        <!--<TextBlock Text="{ x:Bind placeD }"/>
                         <TextBlock Text="=>" Margin="10 0 10 0"/>
-                        <TextBlock Text="{ x:Bind placeA }"/>
+                        <TextBlock Text="{ x:Bind placeA }"/>-->
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

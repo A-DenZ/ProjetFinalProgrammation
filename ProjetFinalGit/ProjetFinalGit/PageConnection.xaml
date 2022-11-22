@@ -17,7 +17,7 @@
             <Button x:Name="LogInBut" HorizontalAlignment="Center" Content="Se connecter" Background="#06a44b" Foreground="#222" Width="300" Margin="0 30 0 0" Height="35"  Click="LogInBut_Click"  />
             <TextBlock x:Name="NewUser" Text="Nouveau sur Uber? Se créer un compte." FontSize="13" Foreground="#06a44b" Margin="0 70 0 0" HorizontalAlignment="Center" Tapped="NewUser_Tapped" />
         </StackPanel>
-        <StackPanel x:Name="accPanel" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#272727" Width="400" Height="575" CornerRadius="15" Visibility="Collapsed">
+        <StackPanel x:Name="accPanel" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#272727" Width="400" Height="600" CornerRadius="15" Visibility="Collapsed">
             <Image Source="/Assets/Images/Uber.png" Width="150" Margin="0 20 0 0"/>
             <TextBlock x:Name="accErreur" HorizontalAlignment="Center" Foreground="#ed4337" FontSize="14" Margin="0 15 0 0"/>
             <TextBox x:Name="accPrenom" Header="Prenom" Width="300" Margin="0 5 0 0" Foreground="#f1f3f8" />
@@ -26,6 +26,11 @@
             <TextBox x:Name="accAdresse" Header="Adresse" Width="300" Margin="0 0 0 0" Foreground="#f1f3f8" />
             <TextBox x:Name="accEmail" Header="Email" Width="300" Margin="0 0 0 0" Foreground="#f1f3f8" />
             <PasswordBox x:Name="accPassword" Header="Mot de passe" Width="300" Margin="0 0 0 0"/>
+
+            <ComboBox x:Name="cbb" Margin="0 5 0 0" Width="300" HorizontalAlignment="Center" Header="Type de compte">
+                <x:String>Usager</x:String>
+                <x:String>Conducteur</x:String>
+            </ComboBox>
             <Button  x:Name="CreateAccount"  HorizontalAlignment="Center" Content="Créer le compte" Background="#06a44b" Foreground="#222" Width="300" Margin="0 10 0 0" Height="35" Click="CreateAccount_Click"   />
             <TextBlock  x:Name="AlreadyUser" Text="Déjà membre? Se connecter."  FontSize="13" Foreground="#06a44b" Margin="0 20 0 0" HorizontalAlignment="Center" Tapped="AlreadyUser_Tapped" />
         </StackPanel>
