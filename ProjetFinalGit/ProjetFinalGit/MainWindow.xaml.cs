@@ -26,7 +26,7 @@ namespace ProjetFinalGit
         public MainWindow()
         {
             this.InitializeComponent();
-            this.mainFrame.Navigate(typeof(PageConnection));
+            this.mainFrame.Navigate(typeof(PageTrajets));
 
         }
 
@@ -39,13 +39,16 @@ namespace ProjetFinalGit
             }
         }
 
-
-
-
-
-
-
-
-
+        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            NavigationViewItem item = args.SelectedItem as NavigationViewItem;
+            if (item.Name == "Trajets")
+            {
+                mainFrame.Navigate(typeof(PageTrajets));
+            } else if (item.Name == "Connexion")
+            {
+                mainFrame.Navigate(typeof(PageConnection));
+            }
+        }
     }
 }
