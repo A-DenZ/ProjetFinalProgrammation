@@ -32,33 +32,75 @@ namespace ProjetFinalGit
 
         ObservableCollection<User> listeUser = new ObservableCollection<User>();
 
-        public bool UserLogged { get => userLogged; }
+        
 
         public bool getUser(string e, string p)
         {
+            try
+            {
 
-            MySqlCommand commande = new MySqlCommand();
-            commande.Connection = con;
-            commande.CommandText = $"Select * from compte where email ={e} and password ={p}";
-            con.Open();
-            MySqlDataReader r = commande.ExecuteReader();
-            if(r.Read() == true)
-            {
-                
-                userLogged = true;
-                return true;     
+                MySqlCommand commande = new MySqlCommand();
+                commande.Connection = con;
+                commande.CommandText = $"Select * from compte where email ={e} and password ={p}";
+                con.Open();
+                MySqlDataReader r = commande.ExecuteReader();
+                if(r.Read() == true)
+                {
+                    userLogged = true;
+                    return true;     
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+            catch(MySqlException ex)
             {
+                con.Close();
                 return false;
             }
-            
         }
 
-        public bool getLoginStat()
+        public int addUser(User u)
         {
-            return userLogged;
+            try
+            {
+                string prenom = u.Prenom;
+                string nom = u.Nom;
+                string phone = u.Phone;
+                string adresse = u.Adresse;
+                string email = u.Email;
+                string password = u.Password;
+                int retour = 0;
+
+                MySqlCommand commande = new MySqlCommand();
+                commande.Connection = con;
+                commande.CommandText = "insert into User values(null,@prenom,@email,@adresse,@email,@password) ";
+
+
+                commande.Parameters.AddWithValue("@prenom", u.Prenom);
+                commande.Parameters.AddWithValue("@nom", u.Nom);
+                commande.Parameters.AddWithValue("@email", u.Email);
+                commande.Parameters.AddWithValue("@adresse", u.Adresse);
+                commande.Parameters.AddWithValue("@email", u.Email);
+                commande.Parameters.AddWithValue("@password", u.Password);
+
+                con.Open();
+                commande.Prepare();
+                retour = commande.ExecuteNonQuery();
+
+                con.Close();
+                return retour;
+            }
+            catch(MySqlException ex)
+            {
+                con.Close();
+                return 0;
+            }
         }
+
+        public bool UserLogged { get => userLogged;}
+
 
     }
 }

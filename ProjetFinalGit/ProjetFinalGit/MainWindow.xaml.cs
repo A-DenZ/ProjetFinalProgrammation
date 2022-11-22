@@ -32,9 +32,9 @@ namespace ProjetFinalGit
 
         public void updateSession()
         {
-            if (GestionBD.getInstance().getLoginStat() == true)
+            if (GestionBD.getInstance().UserLogged == true)
             {
-                Trajets.Visibility = Visibility.Visible;
+                // visibility
                 
             }
         }
