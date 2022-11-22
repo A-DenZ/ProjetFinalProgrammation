@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.VoiceCommands;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
@@ -24,10 +25,13 @@ namespace ProjetFinalGit
     /// </summary>
     public sealed partial class PageConnection : Page
     {
+       
         bool userLogged = false;      
         public PageConnection()
         {
             this.InitializeComponent();
+            cbb.SelectedIndex = 0;
+            
         }
 
         private void LogInBut_Click(object sender, RoutedEventArgs e)
@@ -62,7 +66,7 @@ namespace ProjetFinalGit
                 }
                 else
                 {
-                    //logErreur.Text = "Un usager à été login tamaman";
+                    logErreur.Text = "Un usager à été login tamaman";
                 }
             }
         }
@@ -112,19 +116,31 @@ namespace ProjetFinalGit
                 accValide = false;   
             }
 
+            if(cbb.SelectedIndex == -1)
+            {
+                accValide = false;
+            }
+
             if(accValide != true)
             {
                 accErreur.Text = "un champ est invalide";
             }
             else
             {
-                setUser();
-                this.Frame.Navigate(typeof(PageConnection));
+                int shit = setUser();
+
+                if (shit > 0)
+                {
+                    this.Frame.Navigate(typeof(PageTrajets));
+                } else
+                {
+                    this.Frame.Navigate(typeof(PageConnection));
+                }
             }
 
         }
 
-        private void setUser()
+        private int setUser()
         {
             User u = new User()
             {
@@ -133,12 +149,25 @@ namespace ProjetFinalGit
                 Phone = accPhone.Text,
                 Adresse = accAdresse.Text,
                 Email = accEmail.Text,
+                Type = getType(),
                 Password = accPassword.Password.ToString(),
 
             };
-            GestionBD.getInstance().addUser(u);
+
+            return GestionBD.getInstance().addUser(u);
         }
 
+        private string getType()
+        {
+            if(cbb.SelectedIndex == 0)
+            {
+                return "user";
+            }
+            else
+            {
+                return "driver";
+            }
+        }
 
         private void reset()
         {

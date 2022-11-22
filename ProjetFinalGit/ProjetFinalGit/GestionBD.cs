@@ -39,9 +39,18 @@ namespace ProjetFinalGit
             try
             {
 
-                MySqlCommand commande = new MySqlCommand();
+                MySqlCommand commande = new MySqlCommand("Login_User");
                 commande.Connection = con;
-                commande.CommandText = $"Select * from compte where email ={e} and password ={p}";
+                commande.CommandType = System.Data.CommandType.StoredProcedure;
+
+                commande.Parameters.Add(new MySqlParameter("@mail", e));
+                commande.Parameters.Add(new MySqlParameter("@mdp", p));
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    con.Close();
+                }
+
                 con.Open();
                 MySqlDataReader r = commande.ExecuteReader();
                 if(r.Read() == true)
@@ -53,8 +62,9 @@ namespace ProjetFinalGit
                 {
                     return false;
                 }
+                con.Close();
             }
-            catch(MySqlException ex)
+            catch(Exception ex)
             {
                 con.Close();
                 return false;
@@ -71,19 +81,19 @@ namespace ProjetFinalGit
                 string adresse = u.Adresse;
                 string email = u.Email;
                 string password = u.Password;
+                string type = u.Type;
                 int retour = 0;
 
-                MySqlCommand commande = new MySqlCommand();
+                MySqlCommand commande = new MySqlCommand("Insert_User");
                 commande.Connection = con;
-                commande.CommandText = "insert into User values(null,@prenom,@email,@adresse,@email,@password) ";
-
-
-                commande.Parameters.AddWithValue("@prenom", u.Prenom);
-                commande.Parameters.AddWithValue("@nom", u.Nom);
-                commande.Parameters.AddWithValue("@email", u.Email);
-                commande.Parameters.AddWithValue("@adresse", u.Adresse);
-                commande.Parameters.AddWithValue("@email", u.Email);
-                commande.Parameters.AddWithValue("@password", u.Password);
+                commande.CommandType = System.Data.CommandType.StoredProcedure;
+                commande.Parameters.Add(new MySqlParameter("@prenom1", prenom));
+                commande.Parameters.Add(new MySqlParameter("@nom1", nom));
+                commande.Parameters.Add(new MySqlParameter("@email1", email));
+                commande.Parameters.Add(new MySqlParameter("@numDeTel1", phone));
+                commande.Parameters.Add(new MySqlParameter("@adresse1", adresse));
+                commande.Parameters.Add(new MySqlParameter("@password1", password));
+                commande.Parameters.Add(new MySqlParameter("@type1", type));
 
                 con.Open();
                 commande.Prepare();
@@ -94,6 +104,7 @@ namespace ProjetFinalGit
             }
             catch(MySqlException ex)
             {
+
                 con.Close();
                 return 0;
             }

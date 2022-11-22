@@ -14,6 +14,7 @@ namespace ProjetFinalGit
         string adresse;
         string email;
         string password;
+        string type;
 
         public string Prenom { get => prenom; set => prenom = value; }
         public string Nom { get => nom; set => nom = value; }
@@ -21,5 +22,6 @@ namespace ProjetFinalGit
         public string Adresse { get => adresse; set => adresse = value; }
         public string Email { get => email; set => email = value; }
         public string Password { get => password; set => password = value; }
+        public string Type { get => type; set => type = value; }
     }
 }
