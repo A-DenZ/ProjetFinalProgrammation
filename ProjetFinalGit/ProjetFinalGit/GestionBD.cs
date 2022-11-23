@@ -30,7 +30,7 @@ namespace ProjetFinalGit
         // LES REQUETES AVEC LA BD VONT ICI
         // L'OBSERVABLE COLLECTION AUSSI !!
 
-        ObservableCollection<User> listeUser = new ObservableCollection<User>();
+       
 
         
 
@@ -56,6 +56,7 @@ namespace ProjetFinalGit
                 if(r.Read() == true)
                 {
                     userLogged = true;
+                    
                     return true;     
                 }
                 else
@@ -111,6 +112,24 @@ namespace ProjetFinalGit
         }
 
         public bool UserLogged { get => userLogged;}
+
+        ObservableCollection<User> listeUser = new ObservableCollection<User>();
+        public ObservableCollection<listeUser> getUser()
+        {
+            int retour = 0; 
+            MySqlCommand commande = new MySqlCommand("Get_User");
+            commande.Connection = con;
+            commande.CommandType = System.Data.CommandType.StoredProcedure;
+
+            con.Open();
+            retour = commande.ExecuteNonQuery();
+            return listeUser;
+        }
+
+        public bool delUser(int i)
+        {
+            return false;
+        }
 
 
     }
