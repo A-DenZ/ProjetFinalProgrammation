@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace ProjetFinalGit
 {
@@ -30,7 +31,7 @@ namespace ProjetFinalGit
         // LES REQUETES AVEC LA BD VONT ICI
         // L'OBSERVABLE COLLECTION AUSSI !!
 
-        ObservableCollection<User> listeUser = new ObservableCollection<User>();
+       
 
         
 
@@ -55,6 +56,7 @@ namespace ProjetFinalGit
                 if(r.Read() == true)
                 {
                     userLogged = true;
+                    
                     return true;     
                 }
                 else
@@ -94,6 +96,10 @@ namespace ProjetFinalGit
                 commande.Parameters.Add(new MySqlParameter("@password1", password));
                 commande.Parameters.Add(new MySqlParameter("@type1", type));
 
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    con.Close();
+                }
                 con.Open();
                 commande.Prepare();
                 retour = commande.ExecuteNonQuery();
@@ -110,6 +116,78 @@ namespace ProjetFinalGit
         }
 
         public bool UserLogged { get => userLogged;}
+
+        ObservableCollection<User> listeUser = new ObservableCollection<User>();
+
+
+        public ObservableCollection<User> getUser()
+        {
+            try
+            {
+            
+            MySqlCommand commande = new MySqlCommand("Get_User");
+            commande.Connection = con;
+            commande.CommandType = System.Data.CommandType.StoredProcedure;
+
+            if (con.State == System.Data.ConnectionState.Open)
+            {
+              con.Close();
+            }
+            con.Open();
+            MySqlDataReader r = commande.ExecuteReader();
+            while(r.Read() == true)
+            {
+                    User unUser = new User()
+                    {
+                        Email = r.GetString("email"),
+                        Password = r.GetString("password"),
+                        Prenom = r.GetString("prenom"),
+                        Nom = r.GetString("nom"),
+                        Adresse = r.GetString("adresse"),
+                        Type = r.GetString("type"),
+                        Phone = r.GetString("numDeTel"),
+                        Revenu = r.GetDouble("revenu"),
+                    
+                    
+                    };
+
+                listeUser.Add(unUser);
+            }
+
+
+            return listeUser;
+
+
+
+            }
+            catch(Exception ex)
+            {
+             return listeUser;
+            }
+
+        }
+
+        public bool delUser(int i)
+        {
+            try
+            {
+                int retour = 0;
+                MySqlCommand commande = new MySqlCommand("Del_User");
+                commande.Connection = con;
+                commande.CommandType = System.Data.CommandType.StoredProcedure;
+                con.Open();
+                retour = commande.ExecuteNonQuery();
+                return true ;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+
+
+
+            
+        }
 
 
     }
