@@ -14,7 +14,9 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="PageConnection.xaml" />
+    <None Remove="PageGestionDesUsagers.xaml" />
     <None Remove="PageTrajets.xaml" />
+    <None Remove="PageUpdateAndDeleteUsers.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,6 +43,16 @@
   -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="PageUpdateAndDeleteUsers.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="PageGestionDesUsagers.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="PageTrajets.xaml">

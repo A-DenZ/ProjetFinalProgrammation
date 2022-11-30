@@ -48,6 +48,9 @@ namespace ProjetFinalGit
             } else if (item.Name == "Connexion")
             {
                 mainFrame.Navigate(typeof(PageConnection));
+            } else if(item.Name == "GestionDesUsagers")
+            {
+                mainFrame.Navigate(typeof(PageGestionDesUsagers));
             }
         }
     }

@@ -12,8 +12,8 @@
     <NavigationView x:Name="nav" PaneDisplayMode="Left" PaneTitle="Uber sur un budget" IsBackButtonVisible="Collapsed" Background="#181818" Foreground="#f1f3f8" IsSettingsVisible="False" SelectionChanged="NavigationView_SelectionChanged">
         <NavigationView.MenuItems>
             <NavigationViewItem x:Name="Trajets" Content="Trajets" Icon="Map"  Visibility="Visible"/>
-            <NavigationViewItem x:Name="Connexion" Content="Se connecter" VerticalAlignment="Bottom" Icon="People"/>
-
+            <NavigationViewItem x:Name="Connexion" Content="Se connecter" Icon="Permissions"/>
+            <NavigationViewItem x:Name="GestionDesUsagers" Content="Gestion des usagers" Icon="Admin" />
         </NavigationView.MenuItems>
         
         <Frame x:Name="mainFrame"/>
