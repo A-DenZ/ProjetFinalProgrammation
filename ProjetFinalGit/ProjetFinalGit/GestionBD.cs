@@ -38,7 +38,6 @@ namespace ProjetFinalGit
         {
             try
             {
-
                 MySqlCommand commande = new MySqlCommand("Login_User");
                 commande.Connection = con;
                 commande.CommandType = System.Data.CommandType.StoredProcedure;
