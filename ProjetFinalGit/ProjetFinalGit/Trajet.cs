@@ -16,16 +16,6 @@ namespace ProjetFinalGit
         bool arret;
         int vehicule;
 
-        public Trajet(int placeD, int placeA, DateTime heureD, DateTime heureA, bool arret, int vehicule)
-        {
-            this.placeD = placeD;
-            this.placeA = placeA;
-            this.heureD = heureD;
-            this.heureA = heureA;
-            this.arret = arret;
-            this.vehicule = vehicule;
-        }
-
         public int Id { get => id; set => id = value; }
         public int PlaceD { get => placeD; set => placeD = value; }
         public int PlaceA { get => placeA; set => placeA = value; }

@@ -26,6 +26,7 @@ namespace ProjetFinalGit
         public PageTrajets()
         {
             this.InitializeComponent();
+            lvTrajet.ItemsSource = GestionBD.getInstance().GetTrajetFullInfos();
         }
     }
 }
