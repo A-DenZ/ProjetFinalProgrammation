@@ -125,7 +125,7 @@ namespace ProjetFinalGit
         {
             try
             {
-            
+            listeUser.Clear();
             MySqlCommand commande = new MySqlCommand("Get_User");
             commande.Connection = con;
             commande.CommandType = System.Data.CommandType.StoredProcedure;
@@ -175,14 +175,21 @@ namespace ProjetFinalGit
             {
                 int retour = 0;
                 MySqlCommand commande = new MySqlCommand("Del_User");
+                commande.Parameters.Add(new MySqlParameter("idObj", i));
                 commande.Connection = con;
                 commande.CommandType = System.Data.CommandType.StoredProcedure;
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    con.Close();
+                }
                 con.Open();
                 retour = commande.ExecuteNonQuery();
+                con.Close();
                 return true ;
             }
             catch(Exception ex)
             {
+                con.Close();
                 return false;
             }
 
@@ -191,6 +198,59 @@ namespace ProjetFinalGit
             
         }
 
+
+        public int UpdateUser(int i , User u )
+        {
+            try
+            {
+                string email = u.Email;
+                string password = u.Password;
+                string prenom = u.Prenom;
+                string nom = u.Nom;
+                string adresse = u.Adresse;
+                string type = u.Type;
+                string phone = u.Phone;
+
+                double revenu = u.Revenu;
+                
+
+
+
+
+                int retour = 0;
+                MySqlCommand commande = new MySqlCommand("Update_User");
+
+                commande.Connection = con;
+                commande.CommandType = System.Data.CommandType.StoredProcedure;
+                commande.Parameters.Add(new MySqlParameter("idObj", i));
+                commande.Parameters.Add(new MySqlParameter("@firstName", prenom));
+                commande.Parameters.Add(new MySqlParameter("@lastName", nom));
+                commande.Parameters.Add(new MySqlParameter("@mail", email));
+                commande.Parameters.Add(new MySqlParameter("@phone", phone));
+                commande.Parameters.Add(new MySqlParameter("@addr", adresse));
+                commande.Parameters.Add(new MySqlParameter("@mdp", password));
+                commande.Parameters.Add(new MySqlParameter("@rev", revenu));
+                commande.Parameters.Add(new MySqlParameter("@typeUser", type));
+                commande.CommandType = System.Data.CommandType.StoredProcedure;
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    con.Close();
+                }
+
+                con.Open();
+                retour = commande.ExecuteNonQuery();
+
+                con.Close();
+                return retour;
+            }
+            catch(Exception ex)
+            {
+                con.Close();
+                return 0;
+            }
+        }        
+    
 
     }
 }
