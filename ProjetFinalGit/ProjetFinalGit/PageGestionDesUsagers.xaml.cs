@@ -25,7 +25,7 @@ namespace ProjetFinalGit
     {
         public PageGestionDesUsagers()
         {
-            this.InitializeComponent();
+            this.InitializeComponent(); 
             lvUsagers.ItemsSource = GestionBD.getInstance().getUser();
         }
 

@@ -89,6 +89,21 @@ namespace ProjetFinalGit
 
         }
 
+
+
+
+
+
+        // !!! CHANGER POUR LE UPDATE !!!
+        
+
+
+        // !! FAIRE LA METHODE SUPPRIMER !!
+
+
+        
+
+
         //private int setUser()
         //{
         //    User u = new User()
@@ -106,16 +121,27 @@ namespace ProjetFinalGit
         //    return GestionBD.getInstance().addUser(u);
         //}
 
+
+
+        
+
+
+
         private string getType()
         {
             if (cbb.SelectedIndex == 0)
             {
                 return "user";
             }
-            else
+            else if(cbb.SelectedIndex == 1)
             {
                 return "driver";
             }
+            else
+            {
+                return "admin";
+            }
+
         }
 
         private void reset()
@@ -123,19 +149,44 @@ namespace ProjetFinalGit
             accErreur.Text = "";
         }
 
-        private void BackButton_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(PageGestionDesUsagers));
-        }
+
+
+
+        // PROVENANCE DE L'AUTRE PAGE !
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             u = (User)e.Parameter;
+
+            accEmail.Text = u.Email;
+            accAdresse.Text = u.Adresse;
+            accNom.Text = u.Nom;
+            accPassword.Password = u.Password;
+            accPhone.Text = u.Phone;
+            accPrenom.Text= u.Prenom;
+            
+
+            if(u.Type == "user")
+            {
+                cbb.SelectedIndex = 0;
+            }else if(u.Type == "driver")
+            { 
+                cbb.SelectedIndex = 1; 
+            }
+            else
+            {
+                cbb.SelectedIndex = 2;
+            }
+
+
+
+            
+
         }
 
-
-
-
-
+        private void DeleteAccount_Click(object sender, RoutedEventArgs e)
+        {
+            GestionBD.getInstance().delUser(1);
+        }
     }
 }

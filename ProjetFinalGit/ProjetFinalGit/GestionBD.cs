@@ -140,6 +140,7 @@ namespace ProjetFinalGit
             {
                     User unUser = new User()
                     {
+                        Id = r.GetInt32("id"),
                         Email = r.GetString("email"),
                         Password = r.GetString("password"),
                         Prenom = r.GetString("prenom"),
