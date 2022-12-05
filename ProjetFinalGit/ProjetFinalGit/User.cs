@@ -16,6 +16,7 @@ namespace ProjetFinalGit
         string password;
         string type;
         double revenu;
+        int id;
 
         public string Prenom { get => prenom; set => prenom = value; }
         public string Nom { get => nom; set => nom = value; }
@@ -25,5 +26,6 @@ namespace ProjetFinalGit
         public string Password { get => password; set => password = value; }
         public string Type { get => type; set => type = value; }
         public double Revenu { get => revenu; set => revenu = value; }
+        public int Id { get => id; set => id = value; }
     }
 }

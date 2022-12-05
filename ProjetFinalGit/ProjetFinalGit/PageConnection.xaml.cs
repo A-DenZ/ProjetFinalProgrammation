@@ -26,7 +26,10 @@ namespace ProjetFinalGit
     public sealed partial class PageConnection : Page
     {
        
-        bool userLogged = false;      
+        bool userLogged = false;
+        
+
+
         public PageConnection()
         {
             this.InitializeComponent();
@@ -43,6 +46,7 @@ namespace ProjetFinalGit
 
             if(LogEmail.Text.Length == 0)
             {
+               
               valide = false;
                 
             }
