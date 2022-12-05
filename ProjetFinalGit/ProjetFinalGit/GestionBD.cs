@@ -206,8 +206,6 @@ namespace ProjetFinalGit
             
         }
 
-
-
         public int UpdateUser(int i , User u )
         {
             try
@@ -258,16 +256,32 @@ namespace ProjetFinalGit
             }
         }
         
-      
-        public ObservableCollection<TrajetFullInfos> GetTrajetFullInfos()
+
+
+        public bool CreateTrajet(string _placeD, string _placeA, DateTime _heureD, DateTime _heureA, bool _arret, int _idV)
         {
-            ObservableCollection<TrajetFullInfos> newList = new ObservableCollection<TrajetFullInfos>();
             try
             {
-                MySqlCommand commande = new MySqlCommand("get_trajets_full_infos");
-                commande.Connection = con;
-                commande.CommandType = System.Data.CommandType.StoredProcedure;
+                //Trajet newTrajet = new Trajet()
+                //{
+                //    PlaceD = 1,
+                //    PlaceA = 2,
+                //    HeureD = new DateTime(),
+                //    HeureA = new DateTime(),
+                //    Arret = true,
+                //    Vehicule = 2
+                //};
 
+                MySqlCommand commande = new MySqlCommand("Insert_Trajet");
+                commande.CommandType = System.Data.CommandType.StoredProcedure;
+                commande.Connection = con;
+
+                commande.Parameters.Add(new MySqlParameter("@_placeD", 1));
+                commande.Parameters.Add(new MySqlParameter("@_placeA", 2));
+                commande.Parameters.Add(new MySqlParameter("@_heureD", new DateTime()));
+                commande.Parameters.Add(new MySqlParameter("@_heureA", new DateTime()));
+                commande.Parameters.Add(new MySqlParameter("@_arret", true));
+                commande.Parameters.Add(new MySqlParameter("@_idV", 2));
 
                 if (con.State == System.Data.ConnectionState.Open)
                 {
@@ -275,24 +289,18 @@ namespace ProjetFinalGit
                 }
 
                 con.Open();
-
                 commande.Prepare();
-                retour = commande.ExecuteNonQuery();
+                bool retour = Convert.ToBoolean(commande.ExecuteNonQuery());
 
                 con.Close();
                 return retour;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                con.Close();
-                return 0;
+
             }
-        }
 
 
-        public bool CreateTrajet(string _placeD, string _placeA, DateTime _heureD, DateTime _heureA, bool _arret, int _idV)
-        {
-             
             return true;
         }
         
