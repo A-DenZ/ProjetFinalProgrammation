@@ -89,6 +89,7 @@ namespace ProjetFinalGit
                 MySqlCommand commande = new MySqlCommand("Insert_User");
                 commande.Connection = con;
                 commande.CommandType = System.Data.CommandType.StoredProcedure;
+
                 commande.Parameters.Add(new MySqlParameter("@prenom1", prenom));
                 commande.Parameters.Add(new MySqlParameter("@nom1", nom));
                 commande.Parameters.Add(new MySqlParameter("@email1", email));
@@ -214,24 +215,22 @@ namespace ProjetFinalGit
                 double revenu = u.Revenu;
                 
 
-
-
-
                 int retour = 0;
-                MySqlCommand commande = new MySqlCommand("Update_User");
 
-                commande.Connection = con;
+                MySqlCommand commande = new MySqlCommand("Update_User");
                 commande.CommandType = System.Data.CommandType.StoredProcedure;
+                commande.Connection = con;
+
                 commande.Parameters.Add(new MySqlParameter("idObj", i));
+                commande.Parameters.Add(new MySqlParameter("@mail", email));
+                commande.Parameters.Add(new MySqlParameter("mdp", password));
                 commande.Parameters.Add(new MySqlParameter("@firstName", prenom));
                 commande.Parameters.Add(new MySqlParameter("@lastName", nom));
-                commande.Parameters.Add(new MySqlParameter("@mail", email));
-                commande.Parameters.Add(new MySqlParameter("@phone", phone));
                 commande.Parameters.Add(new MySqlParameter("@addr", adresse));
-                commande.Parameters.Add(new MySqlParameter("@mdp", password));
-                commande.Parameters.Add(new MySqlParameter("@rev", revenu));
                 commande.Parameters.Add(new MySqlParameter("@typeUser", type));
-                commande.CommandType = System.Data.CommandType.StoredProcedure;
+                commande.Parameters.Add(new MySqlParameter("@rev", revenu));
+                commande.Parameters.Add(new MySqlParameter("@phone", phone));
+
 
                 if (con.State == System.Data.ConnectionState.Open)
                 {
@@ -239,6 +238,7 @@ namespace ProjetFinalGit
                 }
 
                 con.Open();
+                commande.Prepare();
                 retour = commande.ExecuteNonQuery();
 
                 con.Close();

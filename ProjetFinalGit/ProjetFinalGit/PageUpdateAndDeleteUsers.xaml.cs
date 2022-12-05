@@ -24,7 +24,7 @@ namespace ProjetFinalGit
     public sealed partial class PageUpdateAndDeleteUsers : Page
     {
         User u;
-
+       
         public PageUpdateAndDeleteUsers()
         {
             this.InitializeComponent();
@@ -92,6 +92,7 @@ namespace ProjetFinalGit
                 }
                 else
                 {
+                    accErreur.Text = "une erreur c'est produite " ;
                     
                 }
             }
@@ -157,7 +158,8 @@ namespace ProjetFinalGit
 
             };
 
-            return GestionBD.getInstance().UpdateUser(u.Id,u);
+            int userID = u.Id;
+            return GestionBD.getInstance().UpdateUser(userID,u);
         }
 
 
