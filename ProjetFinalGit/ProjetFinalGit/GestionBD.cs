@@ -206,8 +206,6 @@ namespace ProjetFinalGit
             
         }
 
-
-
         public int UpdateUser(int i , User u )
         {
             try
@@ -257,11 +255,52 @@ namespace ProjetFinalGit
                 return 0;
             }
         }
+        
 
 
         public bool CreateTrajet(string _placeD, string _placeA, DateTime _heureD, DateTime _heureA, bool _arret, int _idV)
         {
-             
+            try
+            {
+                //Trajet newTrajet = new Trajet()
+                //{
+                //    PlaceD = 1,
+                //    PlaceA = 2,
+                //    HeureD = new DateTime(),
+                //    HeureA = new DateTime(),
+                //    Arret = true,
+                //    Vehicule = 2
+                //};
+
+                MySqlCommand commande = new MySqlCommand("Insert_Trajet");
+                commande.CommandType = System.Data.CommandType.StoredProcedure;
+                commande.Connection = con;
+
+                commande.Parameters.Add(new MySqlParameter("@_placeD", 1));
+                commande.Parameters.Add(new MySqlParameter("@_placeA", 2));
+                commande.Parameters.Add(new MySqlParameter("@_heureD", new DateTime()));
+                commande.Parameters.Add(new MySqlParameter("@_heureA", new DateTime()));
+                commande.Parameters.Add(new MySqlParameter("@_arret", true));
+                commande.Parameters.Add(new MySqlParameter("@_idV", 2));
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    con.Close();
+                }
+
+                con.Open();
+                commande.Prepare();
+                bool retour = Convert.ToBoolean(commande.ExecuteNonQuery());
+
+                con.Close();
+                return retour;
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+
             return true;
         }
         
