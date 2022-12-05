@@ -28,5 +28,6 @@ namespace ProjetFinalGit
             this.InitializeComponent();
             lvTrajet.ItemsSource = GestionBD.getInstance().GetTrajetFullInfos();
         }
+
     }
 }
