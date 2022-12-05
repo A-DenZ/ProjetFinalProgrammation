@@ -39,7 +39,6 @@ namespace ProjetFinalGit
         {
             try
             {
-
                 MySqlCommand commande = new MySqlCommand("Login_User");
                 commande.Connection = con;
                 commande.CommandType = System.Data.CommandType.StoredProcedure;
@@ -190,6 +189,51 @@ namespace ProjetFinalGit
             
         }
 
+
+        public ObservableCollection<TrajetFullInfos> GetTrajetFullInfos()
+        {
+            ObservableCollection<TrajetFullInfos> newList = new ObservableCollection<TrajetFullInfos>();
+            try
+            {
+                MySqlCommand commande = new MySqlCommand("get_trajets_full_infos");
+                commande.Connection = con;
+                commande.CommandType = System.Data.CommandType.StoredProcedure;
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    con.Close();
+                }
+
+                con.Open();
+                MySqlDataReader r = commande.ExecuteReader();
+                while (r.Read() == true)
+                {
+                    TrajetFullInfos newTrajet = new TrajetFullInfos()
+                    {
+                        Id = r.GetInt32("Id"),
+                        Chauffeur = r.GetString("Chauffeur"),
+                        Trajet = r.GetString("Trajet"),
+                        Arret = r.GetString("Arret"),
+                        Date = r.GetString("Date"),
+                        HeureD = r.GetString("HeureD"),
+                        HeureA = r.GetString("HeureA"),
+                        Vehicule = r.GetString("Vehicule"),
+                        Tarif = r.GetInt32("Tarif")
+                    };
+
+                    newList.Add(newTrajet);
+                }
+
+                con.Close();
+
+                return newList;
+
+            } catch (Exception ex)
+            {
+                return newList;
+            }
+
+        }
 
     }
 }
