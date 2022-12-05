@@ -15,6 +15,11 @@ namespace ProjetFinalGit
         static GestionBD gestionBD = null;
         bool userLogged = false;
 
+        int id = 0;
+        string accountType = "none";
+
+
+
         public GestionBD()
         {
             this.con = new MySqlConnection("Server=cours.cegep3r.info;Database=a2022_420326ri_eq14;Uid=1979090;Pwd=1979090;");
@@ -56,7 +61,8 @@ namespace ProjetFinalGit
                 MySqlDataReader r = commande.ExecuteReader();
                 if(r.Read() == true)
                 {
-                    userLogged = true;
+                    this.Id = r.GetInt32("id");
+                    this.AccountType = r.GetString("type");
                     
                     return true;     
                 }
@@ -118,6 +124,8 @@ namespace ProjetFinalGit
         }
 
         public bool UserLogged { get => userLogged;}
+        public int Id { get => id; set => id = value; }
+        public string AccountType { get => accountType; set => accountType = value; }
 
         ObservableCollection<User> listeUser = new ObservableCollection<User>();
 
@@ -221,9 +229,9 @@ namespace ProjetFinalGit
                 commande.CommandType = System.Data.CommandType.StoredProcedure;
                 commande.Connection = con;
 
-                commande.Parameters.Add(new MySqlParameter("idObj", i));
+                commande.Parameters.Add(new MySqlParameter("@idObj", i));
                 commande.Parameters.Add(new MySqlParameter("@mail", email));
-                commande.Parameters.Add(new MySqlParameter("mdp", password));
+                commande.Parameters.Add(new MySqlParameter("@mdp", password));
                 commande.Parameters.Add(new MySqlParameter("@firstName", prenom));
                 commande.Parameters.Add(new MySqlParameter("@lastName", nom));
                 commande.Parameters.Add(new MySqlParameter("@addr", adresse));
@@ -249,8 +257,16 @@ namespace ProjetFinalGit
                 con.Close();
                 return 0;
             }
-        }        
-    
+        }
+
+
+        public bool CreateTrajet(string _placeD, string _placeA, DateTime _heureD, DateTime _heureA, bool _arret, int _idV)
+        {
+             
+                
+
+            return true;
+        }
 
     }
 }

@@ -145,7 +145,7 @@ namespace ProjetFinalGit
 
         private int setUser()
         {
-            User u = new User()
+            User newUser = new User()
             {
                 Prenom = accPrenom.Text,
                 Nom = accNom.Text,
@@ -159,7 +159,7 @@ namespace ProjetFinalGit
             };
 
             int userID = u.Id;
-            return GestionBD.getInstance().UpdateUser(userID,u);
+            return GestionBD.getInstance().UpdateUser(userID,newUser);
         }
 
 
