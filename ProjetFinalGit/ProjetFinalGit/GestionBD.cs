@@ -15,6 +15,11 @@ namespace ProjetFinalGit
         static GestionBD gestionBD = null;
         bool userLogged = false;
 
+        int id = 0;
+        string accountType = "none";
+
+
+
         public GestionBD()
         {
             this.con = new MySqlConnection("Server=cours.cegep3r.info;Database=a2022_420326ri_eq14;Uid=1979090;Pwd=1979090;");
@@ -55,7 +60,8 @@ namespace ProjetFinalGit
                 MySqlDataReader r = commande.ExecuteReader();
                 if(r.Read() == true)
                 {
-                    userLogged = true;
+                    this.Id = r.GetInt32("id");
+                    this.AccountType = r.GetString("type");
                     
                     return true;     
                 }
@@ -88,6 +94,7 @@ namespace ProjetFinalGit
                 MySqlCommand commande = new MySqlCommand("Insert_User");
                 commande.Connection = con;
                 commande.CommandType = System.Data.CommandType.StoredProcedure;
+
                 commande.Parameters.Add(new MySqlParameter("@prenom1", prenom));
                 commande.Parameters.Add(new MySqlParameter("@nom1", nom));
                 commande.Parameters.Add(new MySqlParameter("@email1", email));
@@ -116,6 +123,8 @@ namespace ProjetFinalGit
         }
 
         public bool UserLogged { get => userLogged;}
+        public int Id { get => id; set => id = value; }
+        public string AccountType { get => accountType; set => accountType = value; }
 
         ObservableCollection<User> listeUser = new ObservableCollection<User>();
 
@@ -124,7 +133,7 @@ namespace ProjetFinalGit
         {
             try
             {
-            
+            listeUser.Clear();
             MySqlCommand commande = new MySqlCommand("Get_User");
             commande.Connection = con;
             commande.CommandType = System.Data.CommandType.StoredProcedure;
@@ -139,6 +148,7 @@ namespace ProjetFinalGit
             {
                     User unUser = new User()
                     {
+                        Id = r.GetInt32("id"),
                         Email = r.GetString("email"),
                         Password = r.GetString("password"),
                         Prenom = r.GetString("prenom"),
@@ -173,14 +183,21 @@ namespace ProjetFinalGit
             {
                 int retour = 0;
                 MySqlCommand commande = new MySqlCommand("Del_User");
+                commande.Parameters.Add(new MySqlParameter("idObj", i));
                 commande.Connection = con;
                 commande.CommandType = System.Data.CommandType.StoredProcedure;
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    con.Close();
+                }
                 con.Open();
                 retour = commande.ExecuteNonQuery();
+                con.Close();
                 return true ;
             }
             catch(Exception ex)
             {
+                con.Close();
                 return false;
             }
 
@@ -188,6 +205,98 @@ namespace ProjetFinalGit
 
             
         }
+
+
+
+        public int UpdateUser(int i , User u )
+        {
+            try
+            {
+                string email = u.Email;
+                string password = u.Password;
+                string prenom = u.Prenom;
+                string nom = u.Nom;
+                string adresse = u.Adresse;
+                string type = u.Type;
+                string phone = u.Phone;
+
+                double revenu = u.Revenu;
+                
+
+                int retour = 0;
+
+                MySqlCommand commande = new MySqlCommand("Update_User");
+                commande.CommandType = System.Data.CommandType.StoredProcedure;
+                commande.Connection = con;
+
+                commande.Parameters.Add(new MySqlParameter("@idObj", i));
+                commande.Parameters.Add(new MySqlParameter("@mail", email));
+                commande.Parameters.Add(new MySqlParameter("@mdp", password));
+                commande.Parameters.Add(new MySqlParameter("@firstName", prenom));
+                commande.Parameters.Add(new MySqlParameter("@lastName", nom));
+                commande.Parameters.Add(new MySqlParameter("@addr", adresse));
+                commande.Parameters.Add(new MySqlParameter("@typeUser", type));
+                commande.Parameters.Add(new MySqlParameter("@rev", revenu));
+                commande.Parameters.Add(new MySqlParameter("@phone", phone));
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    con.Close();
+                }
+
+                con.Open();
+                commande.Prepare();
+                retour = commande.ExecuteNonQuery();
+
+                con.Close();
+                return retour;
+            }
+            catch(Exception ex)
+            {
+                con.Close();
+                return 0;
+            }
+        }
+        
+      
+        public ObservableCollection<TrajetFullInfos> GetTrajetFullInfos()
+        {
+            ObservableCollection<TrajetFullInfos> newList = new ObservableCollection<TrajetFullInfos>();
+            try
+            {
+                MySqlCommand commande = new MySqlCommand("get_trajets_full_infos");
+                commande.Connection = con;
+                commande.CommandType = System.Data.CommandType.StoredProcedure;
+
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    con.Close();
+                }
+
+                con.Open();
+
+                commande.Prepare();
+                retour = commande.ExecuteNonQuery();
+
+                con.Close();
+                return retour;
+            }
+            catch(Exception ex)
+            {
+                con.Close();
+                return 0;
+            }
+        }
+
+
+        public bool CreateTrajet(string _placeD, string _placeA, DateTime _heureD, DateTime _heureA, bool _arret, int _idV)
+        {
+             
+            return true;
+        }
+        
+
 
 
         public ObservableCollection<TrajetFullInfos> GetTrajetFullInfos()
@@ -234,6 +343,8 @@ namespace ProjetFinalGit
             }
 
         }
+      
+      
 
     }
 }

@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <StackPanel x:Name="accPanel" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#272727" Width="400" Height="600" CornerRadius="15" Visibility="Collapsed">
+        <StackPanel x:Name="accPanel" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#272727" Width="400" Height="740" CornerRadius="15" Visibility="Visible">
             <Image Source="/Assets/Images/Uber.png" Width="150" Margin="0 20 0 0"/>
             <TextBlock x:Name="accErreur" HorizontalAlignment="Center" Foreground="#ed4337" FontSize="14" Margin="0 15 0 0"/>
             <TextBox x:Name="accPrenom" Header="Prenom" Width="300" Margin="0 5 0 0" Foreground="#f1f3f8" />
@@ -17,14 +17,18 @@
             <TextBox x:Name="accPhone" Header="Téléphone" Width="300" Margin="0 0 0 0" Foreground="#f1f3f8" />
             <TextBox x:Name="accAdresse" Header="Adresse" Width="300" Margin="0 0 0 0" Foreground="#f1f3f8" />
             <TextBox x:Name="accEmail" Header="Email" Width="300" Margin="0 0 0 0" Foreground="#f1f3f8" />
+            <TextBox x:Name="accRevenu" Header="Revenu" Width="300" Margin="0 0 0 0" Foreground="#f1f3f8" />
             <PasswordBox x:Name="accPassword" Header="Mot de passe" Width="300" Margin="0 0 0 0"/>
 
             <ComboBox x:Name="cbb" Margin="0 5 0 0" Width="300" HorizontalAlignment="Center" Header="Type de compte">
                 <x:String>Usager</x:String>
                 <x:String>Conducteur</x:String>
+                <x:String>Administrateur</x:String>
             </ComboBox>
-            <Button  x:Name="CreateAccount"  HorizontalAlignment="Center" Content="Créer le compte" Background="#06a44b" Foreground="#222" Width="300" Margin="0 10 0 0" Height="35" Click="CreateAccount_Click"   />
-            <TextBlock  x:Name="AlreadyUser" Text="Retour à la page précèdente"  FontSize="13" Foreground="#06a44b" Margin="0 20 0 0" HorizontalAlignment="Center" Tapped="BackButton_Tapped" />
+            <Button  x:Name="CreateAccount"  HorizontalAlignment="Center" Content="Modifier le compte" Background="#06a44b" Foreground="#222" Width="300" Margin="0 10 0 0" Height="35" Click="CreateAccount_Click"/>
+            <Button  x:Name="DeleteAccount"  HorizontalAlignment="Center" Content="Supprimer le compte" Background="#c70000" Foreground="#222" Width="300" Margin="0 10 0 0" Height="35" Click="DeleteAccount_Click"/>
+            
+            <TextBlock  x:Name="BackButton" Text="Retour à la page de Gestion"  FontSize="13" Foreground="#06a44b" Margin="0 20 0 0" HorizontalAlignment="Center" Tapped="BackButton_Tapped" />
         </StackPanel>
     </Grid>
 </Page>

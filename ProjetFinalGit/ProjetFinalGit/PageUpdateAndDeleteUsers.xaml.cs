@@ -24,7 +24,7 @@ namespace ProjetFinalGit
     public sealed partial class PageUpdateAndDeleteUsers : Page
     {
         User u;
-
+       
         public PageUpdateAndDeleteUsers()
         {
             this.InitializeComponent();
@@ -69,42 +69,57 @@ namespace ProjetFinalGit
                 accValide = false;
             }
 
-        //    if (accValide != true)
-        //    {
-        //        accErreur.Text = "un champ est invalide";
-        //    }
-        //    else
-        //    {
-        //        int shit = setUser();
+            if(accRevenu.Text.Length == 0)
+            {
+                accValide = false;
+            }
 
-        //        if (shit > 0)
-        //        {
-        //            this.Frame.Navigate(typeof(PageTrajets));
-        //        }
-        //        else
-        //        {
-        //            this.Frame.Navigate(typeof(PageConnection));
-        //        }
-        //    }
+
+
+
+
+            if (accValide != true)
+            {
+                accErreur.Text = "un champ est invalide";
+            }
+            else
+            {
+                int shit = setUser();
+
+                if (shit > 0)
+                {
+                    this.Frame.Navigate(typeof(PageGestionDesUsagers));
+                }
+                else
+                {
+                    accErreur.Text = "une erreur c'est produite " ;
+                    
+                }
+            }
 
         }
 
-        //private int setUser()
-        //{
-        //    User u = new User()
-        //    {
-        //        Prenom = accPrenom.Text,
-        //        Nom = accNom.Text,
-        //        Phone = accPhone.Text,
-        //        Adresse = accAdresse.Text,
-        //        Email = accEmail.Text,
-        //        Type = getType(),
-        //        Password = accPassword.Password.ToString(),
 
-        //    };
 
-        //    return GestionBD.getInstance().addUser(u);
-        //}
+
+
+
+        public double validateRevenu()
+        {
+            try
+            {
+
+                double revenu = Convert.ToDouble(accRevenu.Text);
+
+                return revenu;
+
+
+            }catch(Exception ex) 
+            {
+              return 0;
+            }
+        }
+
 
         private string getType()
         {
@@ -112,15 +127,108 @@ namespace ProjetFinalGit
             {
                 return "user";
             }
-            else
+            else if (cbb.SelectedIndex == 1)
             {
                 return "driver";
             }
+            else
+            {
+                return "admin";
+            }
+
         }
 
-        private void reset()
+
+
+
+
+
+        private int setUser()
         {
-            accErreur.Text = "";
+            User newUser = new User()
+            {
+                Prenom = accPrenom.Text,
+                Nom = accNom.Text,
+                Phone = accPhone.Text,
+                Adresse = accAdresse.Text,
+                Email = accEmail.Text,
+                Revenu = validateRevenu(),
+                Type = getType(),
+                Password = accPassword.Password.ToString(),
+
+            };
+
+            int userID = u.Id;
+            return GestionBD.getInstance().UpdateUser(userID,newUser);
+        }
+
+
+
+
+        // PROVENANCE DE L'AUTRE PAGE !
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+
+            try
+            {
+
+                u = (User)e.Parameter;
+
+                accEmail.Text = u.Email;
+                accAdresse.Text = u.Adresse;
+                accNom.Text = u.Nom;
+                accPassword.Password = u.Password;
+                accPhone.Text = u.Phone;
+                accPrenom.Text= u.Prenom;
+                accRevenu.Text = Convert.ToString(u.Revenu);
+            
+
+                if(u.Type == "user")
+                {
+                    cbb.SelectedIndex = 0;
+                }else if(u.Type == "driver")
+                { 
+                    cbb.SelectedIndex = 1; 
+                }
+                else
+                {
+                    cbb.SelectedIndex = 2;
+                }
+
+            }catch (Exception ex)
+            {
+                accErreur.Text = "Une erreur c'est produite";
+            }
+
+
+
+
+
+        }
+
+        private void DeleteAccount_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+            
+               bool failcheck =  GestionBD.getInstance().delUser(u.Id);
+                if(failcheck == true)
+                {
+                    this.Frame.Navigate(typeof(PageGestionDesUsagers));
+                }
+                else 
+                {
+                    accErreur.Text = "La suppréssion n'a pas fonctionnée";
+                }
+
+            }catch(Exception ex) 
+            {
+                accErreur.Text = "La suppréssion n'a pas fonctionnée";
+            }
+
+
         }
 
         private void BackButton_Tapped(object sender, TappedRoutedEventArgs e)
@@ -128,12 +236,15 @@ namespace ProjetFinalGit
             this.Frame.Navigate(typeof(PageGestionDesUsagers));
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+
+
+
+
+
+        private void reset()
         {
-            u = (User)e.Parameter;
+            accErreur.Text = "";
         }
-
-
 
 
 
