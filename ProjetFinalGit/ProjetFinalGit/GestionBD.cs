@@ -257,37 +257,6 @@ namespace ProjetFinalGit
                 return 0;
             }
         }
-        
-      
-        public ObservableCollection<TrajetFullInfos> GetTrajetFullInfos()
-        {
-            ObservableCollection<TrajetFullInfos> newList = new ObservableCollection<TrajetFullInfos>();
-            try
-            {
-                MySqlCommand commande = new MySqlCommand("get_trajets_full_infos");
-                commande.Connection = con;
-                commande.CommandType = System.Data.CommandType.StoredProcedure;
-
-
-                if (con.State == System.Data.ConnectionState.Open)
-                {
-                    con.Close();
-                }
-
-                con.Open();
-
-                commande.Prepare();
-                retour = commande.ExecuteNonQuery();
-
-                con.Close();
-                return retour;
-            }
-            catch(Exception ex)
-            {
-                con.Close();
-                return 0;
-            }
-        }
 
 
         public bool CreateTrajet(string _placeD, string _placeA, DateTime _heureD, DateTime _heureA, bool _arret, int _idV)
