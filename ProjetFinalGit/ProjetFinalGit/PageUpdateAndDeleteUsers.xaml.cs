@@ -219,7 +219,7 @@ namespace ProjetFinalGit
                 if(failcheck == true)
                 {
                     accErreur.Text = "l'utlisateur à été supprimer";
-                    accErreur.Foreground = new SolidColorBrush(Colors.Green);
+                    accErreur.Foreground = new SolidColorBrush(Colors.Yellow);
                     await Task.Delay(750);
                     this.Frame.Navigate(typeof(PageGestionDesUsagers));
                 }
