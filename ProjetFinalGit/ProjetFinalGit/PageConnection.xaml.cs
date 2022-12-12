@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -34,10 +35,16 @@ namespace ProjetFinalGit
         {
             this.InitializeComponent();
             cbb.SelectedIndex = 0;
+            if (GestionBD.getInstance().Id != 0)
+            {
+                logPanel.Visibility = Visibility.Collapsed;
+                accPanel.Visibility = Visibility.Collapsed;
+                loggedPanel.Visibility = Visibility.Visible;
+            }
             
         }
 
-        private void LogInBut_Click(object sender, RoutedEventArgs e)
+        private async void LogInBut_Click(object sender, RoutedEventArgs e)
         {
             bool valide = true;
             reset();
@@ -66,11 +73,13 @@ namespace ProjetFinalGit
                 if(userLogged != true)
                 {
                     valide = false;
-                    logErreur.Text = "l'email ou le mot de passe est invalide";
+                    logErreur.Text = "l'email ou le mot de passe est invalide.";
                 }
                 else
                 {
-                    logErreur.Text = "Un usager à été login tamaman";
+                    logErreur.Text = "Vous êtes maintenant connecté.";
+                    await Task.Delay(750);
+                    this.Frame.Navigate(typeof(PageTrajets));
                 }
             }
         }
@@ -179,7 +188,11 @@ namespace ProjetFinalGit
             logErreur.Text = "";
         }
 
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            GestionBD.getInstance().Id = 0;
+            GestionBD.getInstance().AccountType = "";
+        }
     }
 
 }
