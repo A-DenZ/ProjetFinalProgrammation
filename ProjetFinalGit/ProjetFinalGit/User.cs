@@ -27,5 +27,10 @@ namespace ProjetFinalGit
         public string Type { get => type; set => type = value; }
         public double Revenu { get => revenu; set => revenu = value; }
         public int Id { get => id; set => id = value; }
+
+        public string ToCsv()
+        {
+            return id + ";" + prenom + ";" + nom + ";" + phone + ";" + adresse + ";" + email + ";" + type + ";" + revenu + ";" ;
+        }
     }
 }

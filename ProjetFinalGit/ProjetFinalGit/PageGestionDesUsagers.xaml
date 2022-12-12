@@ -8,7 +8,9 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <StackPanel>
+        <Button x:Name="butCsv" Content="Envoyer vers un fichier CSV" Click="butCsv_Click"/>
+
         <GridView x:Name="lvUsagers" SelectionChanged="lvUsagers_SelectionChanged">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="local:User">
@@ -29,5 +31,5 @@
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
-    </Grid>
+    </StackPanel>
 </Page>
