@@ -1,8 +1,12 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.UI.Xaml;
+using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -11,6 +15,8 @@ namespace ProjetFinalGit
 {
     internal class GestionBD
     {
+
+        const String cle = "AdminHashKey1234";
         MySqlConnection con;
         static GestionBD gestionBD = null;
         bool userLogged = false;
@@ -87,7 +93,7 @@ namespace ProjetFinalGit
                 string phone = u.Phone;
                 string adresse = u.Adresse;
                 string email = u.Email;
-                string password = u.Password;
+                string password = genererSHA256(u.Password);
                 string type = u.Type;
                 int retour = 0;
 
@@ -211,7 +217,7 @@ namespace ProjetFinalGit
             try
             {
                 string email = u.Email;
-                string password = u.Password;
+                string password = genererSHA256(u.Password);
                 string prenom = u.Prenom;
                 string nom = u.Nom;
                 string adresse = u.Adresse;
@@ -352,9 +358,83 @@ namespace ProjetFinalGit
 
         }
 
-        
-      
-      
 
+
+
+
+        private string genererSHA256(string texte)
+        {
+            var sha256 = SHA256.Create();
+            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(texte));
+
+            StringBuilder sb = new StringBuilder();
+            foreach (Byte b in bytes)
+                sb.Append(b.ToString("x2"));
+
+            return sb.ToString();
+        }
+
+        
+        public void crypter(string texte, string cle)
+        {
+            byte[] iv = new byte[16];
+            byte[] array;
+
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = Encoding.UTF8.GetBytes(cle);
+                aes.IV = iv;
+
+                ICryptoTransform chiffreur = aes.CreateEncryptor(aes.Key, aes.IV);
+
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, chiffreur, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter streamWriter = new StreamWriter((Stream)cryptoStream))
+                        {
+                            streamWriter.Write(texte);
+                        }
+
+                        array = memoryStream.ToArray();
+                    }
+                }
+            }
+        }
+
+
+
+
+            public string decrypter(string texteCrypte)
+            {
+                byte[] iv = new byte[16];
+                byte[] buffer = Convert.FromBase64String(texteCrypte);
+
+                using (Aes aes = Aes.Create())
+                {
+                    aes.Key = Encoding.UTF8.GetBytes(cle);
+                    aes.IV = iv;
+                    ICryptoTransform dechiffreur = aes.CreateDecryptor(aes.Key, aes.IV);
+
+                    using (MemoryStream memoryStream = new MemoryStream(buffer))
+                    {
+                        using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, dechiffreur, CryptoStreamMode.Read))
+                        {
+                            using (StreamReader streamReader = new StreamReader((Stream)cryptoStream))
+                            {
+                                return streamReader.ReadToEnd();
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
+
+
+
+
+
+        }
     }
-}
