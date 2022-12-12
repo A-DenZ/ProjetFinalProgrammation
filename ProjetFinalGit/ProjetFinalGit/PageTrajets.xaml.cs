@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -29,5 +30,29 @@ namespace ProjetFinalGit
             lvTrajet.ItemsSource = GestionBD.getInstance().GetTrajetFullInfos();
         }
 
+        private void addTrajetBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(AddTrajet));
+        }
+
+        private void toCSV_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private async void lvTrajet_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ContentDialog dialog = new ContentDialog();
+            dialog.XamlRoot = this.Frame.XamlRoot;
+            dialog.Title = "Choisir une action";
+            dialog.PrimaryButtonText = "Embarquer";
+            if (GestionBD.getInstance().AccountType == "admin")
+            {
+                dialog.SecondaryButtonText = "Supprimer";
+            }
+            dialog.CloseButtonText = "Fermer";
+
+            ContentDialogResult result = await dialog.ShowAsync();
+        }
     }
 }
