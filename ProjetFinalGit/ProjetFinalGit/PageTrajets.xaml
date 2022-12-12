@@ -13,10 +13,14 @@
             <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Trajets à venir" Margin="30 20 0 30" FontSize="35" FontWeight="Bold" Grid.Row="0"/>
+        <StackPanel Orientation="Horizontal" Height="100" Grid.Row="0" >
+            <TextBlock Text="Trajets à venir" Margin="30 20 0 30" FontSize="35" FontWeight="Bold" Grid.Row="0"/>
+            <Button x:Name="addTrajetBtn" Content="Ajouter Trajet" Margin="40 0 0 0"  Click="addTrajetBtn_Click"/>
+            <Button x:Name="toCSV" Content="Export to CSV" Click="toCSV_Click"/>
+        </StackPanel>
         <!-- Controls -->
 
-        <ListView Margin="10 20 20 0" x:Name="lvTrajet" Grid.Row="1">
+        <ListView Margin="10 20 20 0" x:Name="lvTrajet" Grid.Row="1" SelectionChanged="lvTrajet_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local:TrajetFullInfos">
                     
@@ -60,7 +64,7 @@
                         <StackPanel Orientation="Horizontal" Margin="10 5 10 5">
                             <TextBlock Text="Tarif par passager: " FontSize="18" FontWeight="Medium" Margin="0 0 10 0"/>
                             <TextBlock Text="{x:Bind Tarif}" VerticalAlignment="Center"/>
-                        </StackPanel>
+                        </StackPanel> 
                     </StackPanel>
 
                 </DataTemplate>
