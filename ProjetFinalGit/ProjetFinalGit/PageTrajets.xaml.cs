@@ -30,6 +30,7 @@ namespace ProjetFinalGit
             lvTrajet.ItemsSource = GestionBD.getInstance().GetTrajetFullInfos();
         }
 
+
         private void addTrajetBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(AddTrajet));
@@ -54,5 +55,6 @@ namespace ProjetFinalGit
 
             ContentDialogResult result = await dialog.ShowAsync();
         }
+
     }
 }

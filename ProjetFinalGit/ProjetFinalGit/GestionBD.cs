@@ -1,8 +1,12 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.UI.Xaml;
+using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -12,12 +16,16 @@ namespace ProjetFinalGit
 {
     internal class GestionBD
     {
+
+        const String cle = "AdminHashKey1234";
         MySqlConnection con;
         static GestionBD gestionBD = null;
         bool userLogged = false;
 
         int id = 0;
         string accountType = "none";
+
+        Window mainWindow;
 
 
 
@@ -50,7 +58,7 @@ namespace ProjetFinalGit
                 commande.CommandType = System.Data.CommandType.StoredProcedure;
 
                 commande.Parameters.Add(new MySqlParameter("@mail", e));
-                commande.Parameters.Add(new MySqlParameter("@mdp", p));
+                commande.Parameters.Add(new MySqlParameter("@mdp",  genererSHA256(p)));
 
                 if (con.State == System.Data.ConnectionState.Open)
                 {
@@ -88,7 +96,7 @@ namespace ProjetFinalGit
                 string phone = u.Phone;
                 string adresse = u.Adresse;
                 string email = u.Email;
-                string password = u.Password;
+                string password = genererSHA256(u.Password);
                 string type = u.Type;
                 int retour = 0;
 
@@ -126,6 +134,7 @@ namespace ProjetFinalGit
         public bool UserLogged { get => userLogged; }
         public int Id { get => id; set => id = value; }
         public string AccountType { get => accountType; set => accountType = value; }
+        public Window MainWindow { get => mainWindow; set => mainWindow = value; }
 
         ObservableCollection<User> listeUser = new ObservableCollection<User>();
 
@@ -212,7 +221,7 @@ namespace ProjetFinalGit
             try
             {
                 string email = u.Email;
-                string password = u.Password;
+                string password = genererSHA256(u.Password);
                 string prenom = u.Prenom;
                 string nom = u.Nom;
                 string adresse = u.Adresse;
@@ -401,6 +410,9 @@ namespace ProjetFinalGit
 
         }
 
+
+
+
         public ObservableCollection<String> getVilles()
         {
             ObservableCollection<String> villes = new ObservableCollection<string>();
@@ -433,5 +445,24 @@ namespace ProjetFinalGit
         }
       
 
+
+
+
+
+
+        public string genererSHA256(string texte)
+        {
+            var sha256 = SHA256.Create();
+            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(texte));
+
+            StringBuilder sb = new StringBuilder();
+            foreach (Byte b in bytes)
+                sb.Append(b.ToString("x2"));
+
+            return sb.ToString();
+        }
+
+       
+
+        }
     }
-}

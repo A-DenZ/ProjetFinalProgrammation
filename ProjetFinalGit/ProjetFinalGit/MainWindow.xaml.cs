@@ -26,6 +26,7 @@ namespace ProjetFinalGit
         public MainWindow()
         {
             this.InitializeComponent();
+            GestionBD.getInstance().MainWindow = this;
             this.mainFrame.Navigate(typeof(PageTrajets));
 
         }
