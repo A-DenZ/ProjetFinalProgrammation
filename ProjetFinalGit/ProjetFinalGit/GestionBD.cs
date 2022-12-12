@@ -24,6 +24,8 @@ namespace ProjetFinalGit
         int id = 0;
         string accountType = "none";
 
+        Window mainWindow;
+
 
 
         public GestionBD()
@@ -55,7 +57,7 @@ namespace ProjetFinalGit
                 commande.CommandType = System.Data.CommandType.StoredProcedure;
 
                 commande.Parameters.Add(new MySqlParameter("@mail", e));
-                commande.Parameters.Add(new MySqlParameter("@mdp", p));
+                commande.Parameters.Add(new MySqlParameter("@mdp",  genererSHA256(p)));
 
                 if (con.State == System.Data.ConnectionState.Open)
                 {
@@ -131,6 +133,7 @@ namespace ProjetFinalGit
         public bool UserLogged { get => userLogged;}
         public int Id { get => id; set => id = value; }
         public string AccountType { get => accountType; set => accountType = value; }
+        public Window MainWindow { get => mainWindow; set => mainWindow = value; }
 
         ObservableCollection<User> listeUser = new ObservableCollection<User>();
 
@@ -362,7 +365,7 @@ namespace ProjetFinalGit
 
 
 
-        private string genererSHA256(string texte)
+        public string genererSHA256(string texte)
         {
             var sha256 = SHA256.Create();
             byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(texte));
@@ -374,67 +377,7 @@ namespace ProjetFinalGit
             return sb.ToString();
         }
 
-        
-        public void crypter(string texte, string cle)
-        {
-            byte[] iv = new byte[16];
-            byte[] array;
-
-            using (Aes aes = Aes.Create())
-            {
-                aes.Key = Encoding.UTF8.GetBytes(cle);
-                aes.IV = iv;
-
-                ICryptoTransform chiffreur = aes.CreateEncryptor(aes.Key, aes.IV);
-
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, chiffreur, CryptoStreamMode.Write))
-                    {
-                        using (StreamWriter streamWriter = new StreamWriter((Stream)cryptoStream))
-                        {
-                            streamWriter.Write(texte);
-                        }
-
-                        array = memoryStream.ToArray();
-                    }
-                }
-            }
-        }
-
-
-
-
-            public string decrypter(string texteCrypte)
-            {
-                byte[] iv = new byte[16];
-                byte[] buffer = Convert.FromBase64String(texteCrypte);
-
-                using (Aes aes = Aes.Create())
-                {
-                    aes.Key = Encoding.UTF8.GetBytes(cle);
-                    aes.IV = iv;
-                    ICryptoTransform dechiffreur = aes.CreateDecryptor(aes.Key, aes.IV);
-
-                    using (MemoryStream memoryStream = new MemoryStream(buffer))
-                    {
-                        using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, dechiffreur, CryptoStreamMode.Read))
-                        {
-                            using (StreamReader streamReader = new StreamReader((Stream)cryptoStream))
-                            {
-                                return streamReader.ReadToEnd();
-                            }
-                        }
-                    }
-                }
-            }
-
-
-
-
-
-
-
+       
 
         }
     }

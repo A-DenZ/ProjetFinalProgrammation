@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using MySqlX.XDevAPI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,41 +38,27 @@ namespace ProjetFinalGit
             this.Frame.Navigate(typeof(PageUpdateAndDeleteUsers),u);
         }
 
-        // nom du boutton pour le fichier csv en haut de la barre
-        private async void btLire_Click(object sender, RoutedEventArgs e)
+
+        private async void butCsv_Click(object sender, RoutedEventArgs e)
         {
-            var picker = new Windows.Storage.Pickers.FileOpenPicker();
-            picker.FileTypeFilter.Add(".csv");
+            var picker = new Windows.Storage.Pickers.FileSavePicker();
 
-            /******************** POUR WINUI3 ***************************/
-            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+            
+            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(GestionBD.getInstance().MainWindow);
             WinRT.Interop.InitializeWithWindow.Initialize(picker, hWnd);
-            /************************************************************/
+            
 
-            //sélectionne le fichier à lire
-            Windows.Storage.StorageFile monFichier = await picker.PickSingleFileAsync();
+            picker.SuggestedFileName = "User";
+            picker.FileTypeChoices.Add("Fichier csv", new List<string>() { ".csv" });
 
-            //ouvre le fichier et lit le contenu
-            var lignes = await Windows.Storage.FileIO.ReadLinesAsync(monFichier);
+            //crée le fichier
+            Windows.Storage.StorageFile monFichier = await picker.PickSaveFileAsync();
 
-            List<User> liste = new List<User>();
+            List<User> liste = GestionBD.getInstance().getUser().ToList();
 
-            /*boucle permettant de lire chacune des lignes du fichier
-            * et de remplir une liste d'objets de type CLient
-            */
-            foreach (var ligne in lignes)
-            {
-                var v = ligne.Split(";");
-                liste.Add(new User { Nom = v[0], Prenom = v[1] });
-            }
+            // La fonction ToString de la classe Client retourne: nom + ";" + prenom
 
-            //on peut mettre la liste de Clients comme source d'une listView
-            lvUsagers.ItemsSource = liste;
-
-
-        }
-
-
-
+            await Windows.Storage.FileIO.WriteLinesAsync(monFichier, liste.ConvertAll(x => x.ToCsv()), Windows.Storage.Streams.UnicodeEncoding.Utf8);
         }
     }
+}
