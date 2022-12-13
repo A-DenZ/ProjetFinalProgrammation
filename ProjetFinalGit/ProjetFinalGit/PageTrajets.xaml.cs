@@ -36,9 +36,35 @@ namespace ProjetFinalGit
             this.Frame.Navigate(typeof(AddTrajet));
         }
 
-        private void toCSV_Click(object sender, RoutedEventArgs e)
+        private async void toCSV_Click(object sender, RoutedEventArgs e)
         {
 
+            try
+            {
+                var picker = new Windows.Storage.Pickers.FileSavePicker();
+
+
+                var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(GestionBD.getInstance().MainWindow);
+                WinRT.Interop.InitializeWithWindow.Initialize(picker, hWnd);
+
+
+                picker.SuggestedFileName = "Trajets";
+                picker.FileTypeChoices.Add("Fichier csv", new List<string>() { ".csv" });
+
+                //crée le fichier
+                Windows.Storage.StorageFile monFichier = await picker.PickSaveFileAsync();
+
+                List<TrajetFullInfos> liste = GestionBD.getInstance().GetTrajetFullInfos().ToList();
+
+                // La fonction ToString de la classe Client retourne: nom + ";" + prenom
+
+                await Windows.Storage.FileIO.WriteLinesAsync(monFichier, liste.ConvertAll(x => x.TrajetsToCsv()), Windows.Storage.Streams.UnicodeEncoding.Utf8);
+
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private async void lvTrajet_SelectionChanged(object sender, SelectionChangedEventArgs e)

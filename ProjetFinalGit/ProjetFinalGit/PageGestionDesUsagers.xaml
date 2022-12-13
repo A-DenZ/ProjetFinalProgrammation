@@ -8,10 +8,20 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel>
-        <Button x:Name="butCsv" Content="Envoyer vers un fichier CSV" Click="butCsv_Click"/>
 
-        <GridView x:Name="lvUsagers" SelectionChanged="lvUsagers_SelectionChanged">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Button x:Name="butCsv" Content="Envoyer vers un fichier CSV" Click="butCsv_Click" Grid.Row="0"/>
+
+
+
+        <Grid Grid.Row="1">
+
+            <GridView x:Name="lvUsagers" SelectionChanged="lvUsagers_SelectionChanged">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="local:User">
 
@@ -30,6 +40,7 @@
                     </StackPanel>
                 </DataTemplate>
             </GridView.ItemTemplate>
-        </GridView>
-    </StackPanel>
+            </GridView>
+        </Grid>
+    </Grid>
 </Page>
