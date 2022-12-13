@@ -27,5 +27,14 @@ namespace ProjetFinalGit
         public string HeureA { get => heureA; set => heureA = value; }
         public string Vehicule { get => vehicule; set => vehicule = value; }
         public int Tarif { get => tarif; set => tarif = value; }
+
+
+        public string TrajetsToCsv()
+        {
+            return id + ";" + chauffeur + ";" + trajet + ";" + Arret + ";" + date + ";" + heureD + ";" + heureA + ";" + vehicule + ";" + tarif + ";" ; 
+        } 
+
+
+
     }
 }

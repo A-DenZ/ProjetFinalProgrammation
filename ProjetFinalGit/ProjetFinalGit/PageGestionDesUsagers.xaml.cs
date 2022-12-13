@@ -41,6 +41,10 @@ namespace ProjetFinalGit
 
         private async void butCsv_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+
+            
             var picker = new Windows.Storage.Pickers.FileSavePicker();
 
             
@@ -59,6 +63,12 @@ namespace ProjetFinalGit
             // La fonction ToString de la classe Client retourne: nom + ";" + prenom
 
             await Windows.Storage.FileIO.WriteLinesAsync(monFichier, liste.ConvertAll(x => x.ToCsv()), Windows.Storage.Streams.UnicodeEncoding.Utf8);
+
+            }
+            catch(Exception ex)
+            {
+                
+            }
         }
     }
 }
