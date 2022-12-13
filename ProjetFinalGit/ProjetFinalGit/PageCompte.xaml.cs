@@ -39,7 +39,7 @@ namespace ProjetFinalGit
                 email.Text = "Email " + GestionBD.getInstance().AccountEmail.ToString();
                 phone.Text = "Numéro de téléphone : " + GestionBD.getInstance().AccountNumDeTel.ToString();
                 adresse.Text = "Adresse : " + GestionBD.getInstance().AccountAdresse.ToString();
-                revenu.Text = "Revenu : " + Convert.ToString(GestionBD.getInstance().AccountRevenu.ToString());
+                revenu.Text = "Revenu : " + Convert.ToString(GestionBD.getInstance().AccountRevenu.ToString()) + " $";
 
             }
             else
