@@ -13,8 +13,13 @@
         <NavigationView.MenuItems>
             <NavigationViewItem x:Name="Trajets" Content="Trajets" Icon="Map"  Visibility="Visible"/>
             <NavigationViewItem x:Name="Connexion" Content="Se connecter" Icon="Permissions"/>
-            <NavigationViewItem x:Name="GestionDesUsagers" Content="Gestion des usagers" Icon="Admin" />
+            <NavigationViewItem x:Name="GestionDesUsagers" Content="Gestion des usagers" Icon="Admin" Visibility="Visible" />
+            <NavigationViewItem x:Name="GestionDeSociete" Content="Gestion de la société" Icon="Home" Visibility="Visible" />
         </NavigationView.MenuItems>
+
+        <NavigationView.FooterMenuItems>
+            <NavigationViewItem x:Name="monCompte" Icon="Setting" Content="Mon Compte"/>
+        </NavigationView.FooterMenuItems>
         
         <Frame x:Name="mainFrame"/>
 
