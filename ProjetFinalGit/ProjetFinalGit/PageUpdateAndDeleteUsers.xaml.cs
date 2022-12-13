@@ -32,7 +32,7 @@ namespace ProjetFinalGit
             this.InitializeComponent();
         }
 
-        private void CreateAccount_Click(object sender, RoutedEventArgs e)
+        private async void CreateAccount_Click(object sender, RoutedEventArgs e)
         {
             bool accValide = true;
             reset();
@@ -90,6 +90,9 @@ namespace ProjetFinalGit
 
                 if (shit > 0)
                 {
+                    accErreur.Text = "l'utlisateur à été modifier";
+                    accErreur.Foreground = new SolidColorBrush(Colors.Green);
+                    await Task.Delay(750);
                     this.Frame.Navigate(typeof(PageGestionDesUsagers));
                 }
                 else
@@ -219,7 +222,7 @@ namespace ProjetFinalGit
                 if(failcheck == true)
                 {
                     accErreur.Text = "l'utlisateur à été supprimer";
-                    accErreur.Foreground = new SolidColorBrush(Colors.Yellow);
+                    accErreur.Foreground = new SolidColorBrush(Colors.Green);
                     await Task.Delay(750);
                     this.Frame.Navigate(typeof(PageGestionDesUsagers));
                 }
