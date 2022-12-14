@@ -31,15 +31,6 @@ namespace ProjetFinalGit
 
         }
 
-        public void updateSession()
-        {
-            if (GestionBD.getInstance().UserLogged == true)
-            {
-                // visibility
-                
-            }
-        }
-
         private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             NavigationViewItem item = args.SelectedItem as NavigationViewItem;
@@ -53,6 +44,18 @@ namespace ProjetFinalGit
             {
                 mainFrame.Navigate(typeof(PageGestionDesUsagers));
             }
+            else if (item.Name == "GestionDeSociete")
+            {
+                mainFrame.Navigate(typeof(PageGestionDeLaSociete));
+            }
+            else if (item.Name == "monCompte")
+            {
+                mainFrame.Navigate(typeof(PageCompte));
+            }
+
+
+
+
         }
     }
 }
