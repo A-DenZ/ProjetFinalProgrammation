@@ -25,6 +25,14 @@ namespace ProjetFinalGit
         int id = 0;
         string accountType = "none";
 
+        string accountPrenom = "none";
+        string accountNom = "none";
+        string accountEmail = "none";
+        string accountNumDeTel = "none";
+        string accountAdresse = "none";
+        double accountRevenu = 0;
+
+
         Window mainWindow;
 
 
@@ -71,7 +79,12 @@ namespace ProjetFinalGit
                 {
                     this.Id = r.GetInt32("id");
                     this.AccountType = r.GetString("type");
-
+                    this.AccountEmail = r.GetString("email");
+                    this.AccountRevenu = r.GetDouble("revenu");
+                    this.accountAdresse = r.GetString("adresse");
+                    this.AccountPrenom = r.GetString("prenom");
+                    this.AccountNom = r.GetString("nom");
+                    this.accountNumDeTel = r.GetString("numDeTel");
                     return true;
                 }
                 else
@@ -134,6 +147,13 @@ namespace ProjetFinalGit
         public bool UserLogged { get => userLogged; }
         public int Id { get => id; set => id = value; }
         public string AccountType { get => accountType; set => accountType = value; }
+        public string AccountPrenom { get => accountPrenom; set => accountPrenom = value; }
+        public string AccountNom { get => accountNom; set => accountNom = value; }
+        public string AccountEmail { get => accountEmail; set => accountEmail = value; }
+        public string AccountNumDeTel { get => accountNumDeTel; set => accountNumDeTel = value; }
+        public string AccountAdresse { get => accountAdresse; set => accountAdresse = value; }
+        public double AccountRevenu { get => accountRevenu; set => accountRevenu = value; }
+
         public Window MainWindow { get => mainWindow; set => mainWindow = value; }
 
         ObservableCollection<User> listeUser = new ObservableCollection<User>();
@@ -443,9 +463,66 @@ namespace ProjetFinalGit
             }
 
         }
+        
+        public double getRevenuTot()
+        {
+            double revenuTot = 0;
+            try
+            {
+                MySqlCommand commande = new MySqlCommand("Revenu_Total");
+                commande.Connection = con;
+                commande.CommandType = System.Data.CommandType.StoredProcedure;
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    con.Close();
+                }
+                con.Open();
+                MySqlDataReader r = commande.ExecuteReader();
+                
+                while (r.Read() == true) { 
+
+                revenuTot = r.GetDouble("RevenuTotal");
+
+                }
+                return revenuTot;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
 
 
+        public int getNbrDriver()
+        {
+            int nbrDriver = 0;
+            try
+            {
+                MySqlCommand commande = new MySqlCommand("get_Nbr_Driver");
+                commande.Connection = con;
+                commande.CommandType = System.Data.CommandType.StoredProcedure;
 
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    con.Close();
+                }
+                con.Open();
+                MySqlDataReader r = commande.ExecuteReader();
+
+                while (r.Read() == true)
+                {
+
+                    nbrDriver = r.GetInt32("nbrDriver");
+
+                }
+                return nbrDriver;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
 
 
 

@@ -35,7 +35,6 @@
                         <TextBlock Text="{x:Bind Email}" Margin="5" Foreground="AliceBlue" HorizontalAlignment="Center"/>
                         <TextBlock Text="{x:Bind Phone}" Margin="5" Foreground="AliceBlue" HorizontalAlignment="Center"/>
                         <TextBlock Text="{x:Bind Adresse}" Margin="5" Foreground="AliceBlue" HorizontalAlignment="Center"/>
-                        <TextBlock Text="{x:Bind Password}" Margin="5" Foreground="AliceBlue" HorizontalAlignment="Center"/>
                         <TextBlock Text="{x:Bind Revenu}" Margin="5" Foreground="AliceBlue" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </DataTemplate>
