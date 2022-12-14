@@ -29,13 +29,110 @@
             <TextBlock Text="taux de cotisation : 20% " Foreground="AliceBlue" FontSize="20"/> 
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Grid.Row="1">
-        
-        </StackPanel>
+        <TextBlock FontSize="40" Text="Trajets a venir" Grid.Row="1" Grid.Column="1"/>
+        <ListView Margin="0 70 0 0" x:Name="trajetsAVenir" Grid.Row="1" Grid.Column="1">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:TrajetFullInfos">
 
-        <StackPanel Grid.Column="2" Grid.Row="1">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" Margin="10 5 10 5">
+                            <TextBlock Text="{x:Bind Id}" FontSize="25" FontWeight="SemiBold" Margin="0 0 5 0"/>
+                            <TextBlock Text="." Margin="0 0 15 0" VerticalAlignment="Bottom" FontWeight="SemiBold" FontSize="25"/>
+                            <TextBlock Text="{x:Bind Trajet}" FontSize="25" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
 
-        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="10 5 10 5">
+                            <TextBlock Text="Chauffeur: " FontSize="18" FontWeight="Medium" Margin="0 0 10 0"/>
+                            <TextBlock Text="{x:Bind Chauffeur}" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="10 5 10 5">
+                            <TextBlock Text="Arrêt: " FontSize="18" FontWeight="Medium" Margin="0 0 10 0"/>
+                            <TextBlock Text="{x:Bind Arret}" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="10 5 10 5">
+                            <TextBlock Text="Date: " FontSize="18" FontWeight="Medium" Margin="0 0 10 0"/>
+                            <TextBlock Text="{x:Bind Date}" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="10 5 10 5">
+                            <TextBlock Text="Heure de départ: " FontSize="18" FontWeight="Medium" Margin="0 0 10 0"/>
+                            <TextBlock Text="{x:Bind HeureD}" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="10 5 10 5">
+                            <TextBlock Text="Heure d'arrivé: " FontSize="18" FontWeight="Medium" Margin="0 0 10 0"/>
+                            <TextBlock Text="{x:Bind HeureA}" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="10 5 10 5">
+                            <TextBlock Text="Véhicule: " FontSize="18" FontWeight="Medium" Margin="0 0 10 0"/>
+                            <TextBlock Text="{x:Bind Vehicule}" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="10 5 10 5">
+                            <TextBlock Text="Tarif par passager: " FontSize="18" FontWeight="Medium" Margin="0 0 10 0"/>
+                            <TextBlock Text="{x:Bind Tarif}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <TextBlock FontSize="40" Text="Trajets termines" Grid.Row="1" Grid.Column="2"/>
+            <ListView Margin="0 70 0 0" x:Name="trajetsTermines" Grid.Row="1" Grid.Column="2">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:TrajetFullInfos">
+
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" Margin="10 5 10 5">
+                                <TextBlock Text="{x:Bind Id}" FontSize="25" FontWeight="SemiBold" Margin="0 0 5 0"/>
+                                <TextBlock Text="." Margin="0 0 15 0" VerticalAlignment="Bottom" FontWeight="SemiBold" FontSize="25"/>
+                                <TextBlock Text="{x:Bind Trajet}" FontSize="25" FontWeight="Bold" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10 5 10 5">
+                                <TextBlock Text="Chauffeur: " FontSize="18" FontWeight="Medium" Margin="0 0 10 0"/>
+                                <TextBlock Text="{x:Bind Chauffeur}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10 5 10 5">
+                                <TextBlock Text="Arrêt: " FontSize="18" FontWeight="Medium" Margin="0 0 10 0"/>
+                                <TextBlock Text="{x:Bind Arret}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10 5 10 5">
+                                <TextBlock Text="Date: " FontSize="18" FontWeight="Medium" Margin="0 0 10 0"/>
+                                <TextBlock Text="{x:Bind Date}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10 5 10 5">
+                                <TextBlock Text="Heure de départ: " FontSize="18" FontWeight="Medium" Margin="0 0 10 0"/>
+                                <TextBlock Text="{x:Bind HeureD}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10 5 10 5">
+                                <TextBlock Text="Heure d'arrivé: " FontSize="18" FontWeight="Medium" Margin="0 0 10 0"/>
+                                <TextBlock Text="{x:Bind HeureA}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10 5 10 5">
+                                <TextBlock Text="Véhicule: " FontSize="18" FontWeight="Medium" Margin="0 0 10 0"/>
+                                <TextBlock Text="{x:Bind Vehicule}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10 5 10 5">
+                                <TextBlock Text="Tarif par passager: " FontSize="18" FontWeight="Medium" Margin="0 0 10 0"/>
+                                <TextBlock Text="{x:Bind Tarif}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
 
     </Grid>
 
