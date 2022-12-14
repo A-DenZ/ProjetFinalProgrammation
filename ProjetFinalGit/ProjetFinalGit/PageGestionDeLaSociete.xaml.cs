@@ -32,8 +32,9 @@ namespace ProjetFinalGit
             double RevTot = GestionBD.getInstance().getRevenuTot();
             RevenuTot.Text = "Revenu de la societe " + Convert.ToString(RevTot) + " $";
             nbrDriver.Text = "nombre de chauffeur actif : " + Convert.ToString(GestionBD.getInstance().getNbrDriver()); 
+            trajetsAVenir.ItemsSource = GestionBD.getInstance().GetTrajetFullInfos();
+            trajetsTermines.ItemsSource = GestionBD.getInstance().get_completed_trajets();
         }
-
 
     }
 }
