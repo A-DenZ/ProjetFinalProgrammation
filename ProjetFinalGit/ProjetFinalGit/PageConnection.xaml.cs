@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.UI;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -77,6 +78,7 @@ namespace ProjetFinalGit
                 }
                 else
                 {
+                    logErreur.Foreground = new SolidColorBrush(Colors.Green);
                     logErreur.Text = "Vous êtes maintenant connecté.";
                     await Task.Delay(750);
                     this.Frame.Navigate(typeof(PageTrajets));
