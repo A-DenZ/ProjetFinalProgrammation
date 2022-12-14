@@ -66,7 +66,7 @@ namespace ProjetFinalGit
                 commande.CommandType = System.Data.CommandType.StoredProcedure;
 
                 commande.Parameters.Add(new MySqlParameter("@mail", e));
-                commande.Parameters.Add(new MySqlParameter("@mdp",  genererSHA256(p)));
+                commande.Parameters.Add(new MySqlParameter("@mdp", genererSHA256(p)));
 
                 if (con.State == System.Data.ConnectionState.Open)
                 {
@@ -390,7 +390,7 @@ namespace ProjetFinalGit
             ObservableCollection<TrajetFullInfos> newList = new ObservableCollection<TrajetFullInfos>();
             try
             {
-                MySqlCommand commande = new MySqlCommand("get_trajets_full_infos");
+                MySqlCommand commande = new MySqlCommand("get_active_trajets");
                 commande.Connection = con;
                 commande.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -463,7 +463,6 @@ namespace ProjetFinalGit
             }
 
         }
-
         
         public double getRevenuTot()
         {
@@ -540,7 +539,76 @@ namespace ProjetFinalGit
             return sb.ToString();
         }
 
-       
 
+        public bool getOnTrajet(int _trajetInd)
+        {
+            bool works = true;
+            try
+            {
+                MySqlCommand commande = new MySqlCommand("check_for_compte_trajet");
+                commande.Connection = con;
+                commande.CommandType = System.Data.CommandType.StoredProcedure;
+
+                commande.Parameters.Add(new MySqlParameter("@_trajetId", GestionBD.getInstance().GetTrajetFullInfos()[_trajetInd].Id));
+                commande.Parameters.Add(new MySqlParameter("@_compteId", GestionBD.getInstance().Id));
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    con.Close();
+                }
+                con.Open();
+
+                commande.Prepare();
+                MySqlDataReader r = commande.ExecuteReader();
+                int exists = -1;
+                while (r.Read())
+                {
+                    exists = r.GetInt32("result");
+                }
+                if (exists == -1) works = false;
+                r.Close();
+
+                if (exists == 0)
+                {
+                    commande.CommandText = "insert_compte_trajet";
+                    commande.Parameters.Clear();
+                    commande.Parameters.Add(new MySqlParameter("@_trajetId", GestionBD.getInstance().GetTrajetFullInfos()[_trajetInd].Id));
+                    commande.Parameters.Add(new MySqlParameter("@_compteId", GestionBD.getInstance().Id));
+
+                    if (con.State == System.Data.ConnectionState.Open)
+                    {
+                        con.Close();
+                    }
+                    con.Open();
+
+                    commande.Prepare();
+                    int result = commande.ExecuteNonQuery();
+
+                    if (result == -1)
+                    {
+                        works = false;
+                    }
+
+                }
+                else if (exists == 1) works = false;
+
+                con.Close();
+            }
+            catch (MySqlException ex)
+            {
+                works = false;
+            }
+
+            return works;
         }
+
+
+
+
+
+
+
+
+
     }
+}
